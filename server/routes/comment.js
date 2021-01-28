@@ -36,12 +36,14 @@ router.post("/showComments", (req, res) => {
 
 // 댓글 삭제 기능
 router.post("/deleteComment", (req, res) => {
-  Comment.findOneAndDelete({ _id: req.body.commentId }).exec(
-    (err, deletedCommentId) => {
-      if (err) res.status(400).send(err);
-      res.status(200).json({ success: true, deletedCommentId });
-    }
-  );
+  // 먼저 내가 지우려고 하는 댓글 지워주기
+
+  Comment.findOneAndDelete({
+    _id: req.body.commentId,
+  }).exec((err, deletedId) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, deletedId });
+  });
 });
 
 module.exports = router;

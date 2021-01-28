@@ -24,14 +24,14 @@ function ReplyComment(props) {
               comment={comment}
               videoId={props.videoId}
               refreshFunction={props.refreshFunction}
-              refreshDeleteFunction={props.refreshDeleteFunction}
+              showComments={props.showComments}
             />
             <ReplyComment
               commentList={props.commentList}
               parentCommentId={comment._id}
               videoId={props.videoId}
               refreshFunction={props.refreshFunction}
-              refreshDeleteFunction={props.refreshDeleteFunction}
+              showComments={props.showComments}
             />
           </div>
         )}

@@ -21,6 +21,16 @@ function VideoDetailPage(props) {
     videoId: videoId,
   };
 
+  const showComments = () => {
+    Axios.post("/api/comment/showComments", variables).then((response) => {
+      if (response.data.success) {
+        setComments(response.data.comments);
+      } else {
+        alert("비디오에 해당하는 코멘트 정보를 가져오지 못했습니다!");
+      }
+    });
+  };
+
   useEffect(() => {
     Axios.post("/api/video/showVideoDetail", variables).then((response) => {
       if (response.data.success) {
@@ -31,13 +41,7 @@ function VideoDetailPage(props) {
 
       // 이 비디오에 있는 모든 댓글 가져오기
       // setComments에 의해 모든 댓글이 Comments에 저장된다.
-      Axios.post("/api/comment/showComments", variables).then((response) => {
-        if (response.data.success) {
-          setComments(response.data.comments);
-        } else {
-          alert("비디오에 해당하는 코멘트 정보를 가져오지 못했습니다!");
-        }
-      });
+      showComments(variables);
     });
 
     Axios.post("/api/video/updateViews", variables).then((response) => {
@@ -55,13 +59,9 @@ function VideoDetailPage(props) {
     setComments(Comments.concat(newComments));
   };
 
-  const refreshDeleteFunction = (deletedComments) => {
-    setComments(Comments.filter((comment) => comment._id !== deletedComments));
-  };
-
-  // // user.id 가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듬
-  //   // = user.id 가 id 인 것을 제거함
-  //   setUsers(users.filter(user => user.id !== id));
+  // const refreshDeleteFunction = (deletedComments) => {
+  //   setComments(Comments.filter((comment) => comment._id !== deletedComments));
+  // };
 
   const getSubscribeNumber = (newSubscribeNumber) => {
     setSubscribeNumber(newSubscribeNumber);
@@ -117,7 +117,7 @@ function VideoDetailPage(props) {
             {/* Comments */}
 
             <Comment
-              refreshDeleteFunction={refreshDeleteFunction}
+              showComments={showComments}
               refreshFunction={refreshFunction}
               commentList={Comments}
               videoId={videoId}

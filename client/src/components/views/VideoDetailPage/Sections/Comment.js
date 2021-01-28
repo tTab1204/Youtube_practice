@@ -54,14 +54,14 @@ function Comment(props) {
                   refreshFunction={props.refreshFunction}
                   comment={comment}
                   videoId={props.videoId}
-                  refreshDeleteFunction={props.refreshDeleteFunction}
+                  showComments={props.showComments}
                 />
                 <ReplyComment
                   refreshFunction={props.refreshFunction}
                   commentList={props.commentList}
                   videoId={props.videoId}
                   parentCommentId={comment._id}
-                  refreshDeleteFunction={props.refreshDeleteFunction}
+                  showComments={props.showComments}
                 />
               </React.Fragment>
             )

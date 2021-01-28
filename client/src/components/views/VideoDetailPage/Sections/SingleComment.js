@@ -23,17 +23,19 @@ function SingleComment(props) {
   // 댓글 수정 기능
 
   // 댓글삭제 기능
-  const DeleteHandler = (targetedCommentId) => {
+  const deleteHandler = (targetedCommentId) => {
     let confirmRes = window.confirm("정말 이 글을 삭제하시길 원하시나요 ?");
 
     if (confirmRes) {
       let variables = {
+        videoId: props.videoId,
         commentId: targetedCommentId,
       };
 
       Axios.post("/api/comment/deleteComment", variables).then((response) => {
         if (response.data.success) {
-          props.refreshDeleteFunction(response.data.deletedCommentId);
+          console.log(response.data.deletedId);
+          props.showComments(props.videoId);
         } else {
           alert("댓글 삭제에 실패하였습니다.");
         }
@@ -72,7 +74,7 @@ function SingleComment(props) {
       답글 달기
     </span>,
     <span>수정</span>,
-    <span onClick={() => DeleteHandler(props.comment._id)}>삭제</span>,
+    <span onClick={() => deleteHandler(props.comment._id)}>삭제</span>,
     //<span onClick={DeleteHandler}>삭제</span>,
   ];
 
