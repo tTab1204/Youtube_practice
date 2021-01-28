@@ -9,7 +9,6 @@ const { TextArea } = Input;
 
 function Comment(props) {
   const [CommentValue, setCommentValue] = useState("");
-  const [Comments, setComments] = useState([]);
 
   const user = useSelector((state) => state.user);
 

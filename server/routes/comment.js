@@ -46,4 +46,23 @@ router.post("/deleteComment", (req, res) => {
   });
 });
 
+// 댓글 수정 기능
+router.post("/correctComment", (req, res) => {
+  Comment.findOneAndUpdate(
+    { _id: req.body.commentId },
+    { $set: { content: req.body.content } },
+    { new: true },
+    (err, comment) => {
+      if (err) return res.json({ success: false, err });
+
+      Comment.find({ videoId: req.body.videoId })
+        .populate("writer")
+        .exec((err, comments) => {
+          if (err) res.status(400).send(err);
+          res.status(200).json({ success: true, comments });
+        });
+    }
+  );
+});
+
 module.exports = router;
